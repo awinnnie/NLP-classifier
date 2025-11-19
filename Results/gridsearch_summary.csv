@@ -1,0 +1,12 @@
+model,best_score,best_params
+log_reg,0.6237042071955896,"{'logisticregression__C': 3, 'logisticregression__class_weight': None, 'logisticregression__max_iter': 300, 'logisticregression__penalty': 'l2'}"
+naive_bayes,0.6077797639516588,{'multinomialnb__alpha': 0.5}
+log_reg,0.6237042071955896,"{'logisticregression__C': 3, 'logisticregression__class_weight': None, 'logisticregression__max_iter': 300, 'logisticregression__penalty': 'l2'}"
+naive_bayes,0.6077797639516588,{'multinomialnb__alpha': 0.5}
+svm,0.6229561816891193,"{'svc__C': 10, 'svc__kernel': 'rbf'}"
+random_forest,0.5476197929130835,"{'randomforestclassifier__max_depth': None, 'randomforestclassifier__n_estimators': 300}"
+log_reg,0.6237042071955896,"{'logisticregression__C': 3, 'logisticregression__class_weight': None, 'logisticregression__max_iter': 300, 'logisticregression__penalty': 'l2'}"
+naive_bayes,0.6077797639516588,{'multinomialnb__alpha': 0.5}
+svm,0.6229561816891193,"{'svc__C': 10, 'svc__kernel': 'rbf'}"
+random_forest,0.5464339946604126,"{'randomforestclassifier__max_depth': None, 'randomforestclassifier__n_estimators': 300}"
+xgboost,0.5730925495655258,"{'xgbclassifier__learning_rate': 0.1, 'xgbclassifier__n_estimators': 300}"
