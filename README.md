@@ -101,13 +101,13 @@ The top 15 categories by frequency were selected from the HuffPost dataset and s
 
 ### Pipeline
 
-All models use a `TfidfVectorizer → Classifier` scikit-learn pipeline. Five classifiers were trained and evaluated at baseline: **Logistic Regression**, **Naive Bayes**, **SVM** (LinearSVC for baseline, SVC for tuning), **Random Forest**, and **XGBoost**.
+All models use a `TfidfVectorizer / Classifier` scikit-learn pipeline. Five classifiers were trained and evaluated at baseline: **Logistic Regression**, **Naive Bayes**, **SVM** (LinearSVC for baseline, SVC for tuning), **Random Forest** and **XGBoost**.
 
-Hyperparameter tuning was performed using `GridSearchCV` (3-fold CV, `f1_macro` scoring) on a class-balanced subsample of 3,000 rows per category. Three models were tuned and saved: Logistic Regression, Naive Bayes, and SVM.
+Hyperparameter tuning was performed using `GridSearchCV` (3-fold CV, `f1_macro` scoring) on a class-balanced subsample of 3,000 rows per category. Three models were tuned and saved: Logistic Regression, Naive Bayes and SVM.
 
 ### Selected model: Tuned SVM
 
-I have selected the Tuned SVM model, The tuned SVM (`kernel`, `C` grid-searched) was selected as the production model. It is loaded at startup by both the prediction and data analysis routers:
+I have selected the Tuned SVM model after comparing it against Logistic Regression, Naive Bayes, XGBoost and Random Forest. SVM achieved the best overall F1-score, and it's also well-suited for high-dimensional sparse data like TF-IDF vectors, which is typical in text classification. The tuned SVM model is loaded at startup by both the prediction and data analysis routers:
 
 ```
 backend/Models/tuned/svm.pkl
@@ -153,7 +153,7 @@ The FastAPI backend runs on `http://localhost:8000`. Interactive docs are availa
 
 ### Data Analysis
 
-All write operations (add, update) automatically re-classify the headline through the tuned SVM — the stored category always reflects the model's prediction.
+All write operations (add, update) automatically re-classify the headline through the tuned SVM. The stored category always reflects the model's prediction.
 
 | Method | Endpoint | Description |
 |---|---|---|
@@ -206,12 +206,13 @@ DELETE /delete_headline
 
 ### Prerequisites
 
-- [Docker](https://www.docker.com/) and Docker Compose, **or**
+- [Docker](https://www.docker.com/) and Docker Compose,
+  **or**
 - Python 3.10+
 
 ---
 
-### Running with Docker (Recommended)
+### Running with Docker 
 
 The `docker-compose.yml` defines two services: `backend` (FastAPI on port 8000) and `frontend` (Streamlit on port 8501). The frontend reaches the backend via the internal Docker network (`API_BASE=http://backend:8000`).
 
@@ -282,3 +283,4 @@ The API base URL is configurable in the **sidebar** of the app (defaults to `htt
 - **Prediction** — Enter any news headline and get an instant category prediction from the tuned SVM.
 - **Data Analysis** — Select a category to see its headline count or browse the first 10 entries.
 - **Data Manipulation** — Add new headlines (auto-classified), update existing ones by ID, or delete them by ID.
+
